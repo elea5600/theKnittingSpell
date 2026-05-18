@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>KnitHelper – Knitting Calculator</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <span class="logo">🧶 KnitHelper</span>
+        <p class="tagline">Calculate stitches, rows, increases &amp; decreases for your knitting projects</p>
+    </div>
+</header>
+
+<main>
+    <!-- Tab navigation -->
+    <nav class="tabs" role="tablist">
+        <button class="tab-btn"
+                th:classappend="${activeTab == 'shaping'} ? '' : ' active'"
+                onclick="showTab('stitches')" id="tab-stitches" role="tab">
+            Stitch &amp; Row Count
+        </button>
+        <button class="tab-btn"
+                th:classappend="${activeTab == 'shaping'} ? ' active' : ''"
+                onclick="showTab('shaping')" id="tab-shaping" role="tab">
+            Shaping Calculator
+        </button>
+    </nav>
+
+    <!-- Stitch & Row Calculator -->
+    <section id="stitches" class="tab-panel"
+             th:classappend="${activeTab == 'shaping'} ? ' hidden' : ''">
+        <h2>Stitch &amp; Row Count</h2>
+        <p class="description">
+            Enter your tension/gauge swatch measurements and the desired dimensions of your piece
+            to find out how many stitches to cast on and how many rows to knit.
+        </p>
+
+        <form th:action="@{/calculate/stitches}" method="post" th:object="${stitchInput}" novalidate>
+            <fieldset>
+                <legend>Gauge / Tension Swatch</legend>
+                <div class="field-row">
+                    <label for="stitchesPer10Cm">Stitches per 10 cm</label>
+                    <input type="number" id="stitchesPer10Cm" th:field="*{stitchesPer10Cm}"
+                           step="0.1" min="0.1" placeholder="e.g. 22"/>
+                    <span class="error" th:if="${#fields.hasErrors('stitchesPer10Cm')}"
+                          th:errors="*{stitchesPer10Cm}"></span>
+                </div>
+                <div class="field-row">
+                    <label for="rowsPer10Cm">Rows per 10 cm</label>
+                    <input type="number" id="rowsPer10Cm" th:field="*{rowsPer10Cm}"
+                           step="0.1" min="0.1" placeholder="e.g. 28"/>
+                    <span class="error" th:if="${#fields.hasErrors('rowsPer10Cm')}"
+                          th:errors="*{rowsPer10Cm}"></span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Desired Dimensions</legend>
+                <div class="field-row">
+                    <label for="desiredWidthCm">Width (cm)</label>
+                    <input type="number" id="desiredWidthCm" th:field="*{desiredWidthCm}"
+                           step="0.1" min="0.1" placeholder="e.g. 50"/>
+                    <span class="error" th:if="${#fields.hasErrors('desiredWidthCm')}"
+                          th:errors="*{desiredWidthCm}"></span>
+                </div>
+                <div class="field-row">
+                    <label for="desiredLengthCm">Length (cm)</label>
+                    <input type="number" id="desiredLengthCm" th:field="*{desiredLengthCm}"
+                           step="0.1" min="0.1" placeholder="e.g. 60"/>
+                    <span class="error" th:if="${#fields.hasErrors('desiredLengthCm')}"
+                          th:errors="*{desiredLengthCm}"></span>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn-primary">Calculate</button>
+        </form>
+
+        <div class="result-card" th:if="${stitchResult}">
+            <h3>Result</h3>
+            <table class="result-table">
+                <tr>
+                    <th>Cast on stitches</th>
+                    <td th:text="${stitchResult.stitchCount}"></td>
+                </tr>
+                <tr>
+                    <th>Number of rows</th>
+                    <td th:text="${stitchResult.rowCount}"></td>
+                </tr>
+                <tr>
+                    <th>Finished width</th>
+                    <td th:text="${stitchResult.desiredWidthCm} + ' cm'"></td>
+                </tr>
+                <tr>
+                    <th>Finished length</th>
+                    <td th:text="${stitchResult.desiredLengthCm} + ' cm'"></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- Shaping Calculator -->
+    <section id="shaping" class="tab-panel"
+             th:classappend="${activeTab == 'shaping'} ? '' : ' hidden'">
+        <h2>Shaping Calculator</h2>
+        <p class="description">
+            Enter your current stitch count, target stitch count, and the number of rows available
+            to work out how to distribute your increases or decreases evenly.
+        </p>
+
+        <form th:action="@{/calculate/shaping}" method="post" th:object="${shapingInput}" novalidate>
+            <fieldset>
+                <legend>Shaping Details</legend>
+                <div class="field-row">
+                    <label for="currentStitches">Current stitch count</label>
+                    <input type="number" id="currentStitches" th:field="*{currentStitches}"
+                           step="1" min="1" placeholder="e.g. 80"/>
+                    <span class="error" th:if="${#fields.hasErrors('currentStitches')}"
+                          th:errors="*{currentStitches}"></span>
+                </div>
+                <div class="field-row">
+                    <label for="targetStitches">Target stitch count</label>
+                    <input type="number" id="targetStitches" th:field="*{targetStitches}"
+                           step="1" min="1" placeholder="e.g. 60"/>
+                    <span class="error" th:if="${#fields.hasErrors('targetStitches')}"
+                          th:errors="*{targetStitches}"></span>
+                </div>
+                <div class="field-row">
+                    <label for="numberOfRows">Number of rows to work over</label>
+                    <input type="number" id="numberOfRows" th:field="*{numberOfRows}"
+                           step="1" min="1" placeholder="e.g. 40"/>
+                    <span class="error" th:if="${#fields.hasErrors('numberOfRows')}"
+                          th:errors="*{numberOfRows}"></span>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn-primary">Calculate</button>
+        </form>
+
+        <div class="result-card" th:if="${shapingResult}">
+            <h3>Shaping Instructions</h3>
+            <div class="shaping-type"
+                 th:classappend="${shapingResult.shapingType.name()} == 'INCREASE' ? ' increase' :
+                                  (${shapingResult.shapingType.name()} == 'DECREASE' ? ' decrease' : '')">
+                <span th:text="${shapingResult.shapingType.name() == 'INCREASE'} ? '▲ Increase' :
+                                (${shapingResult.shapingType.name() == 'DECREASE'} ? '▼ Decrease' : '— No change')"></span>
+                <span th:if="${shapingResult.totalChanges > 0}"
+                      th:text="' · ' + ${shapingResult.totalChanges} + ' stitch(es) total'"></span>
+            </div>
+            <ul class="instructions-list">
+                <li th:each="instruction : ${shapingResult.instructions}" th:text="${instruction}"></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>🧶 KnitHelper &mdash; Happy knitting!</p>
+</footer>
+
+<script>
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabName).classList.remove('hidden');
+        document.getElementById('tab-' + tabName).classList.add('active');
+    }
+</script>
+</body>
+</html>
