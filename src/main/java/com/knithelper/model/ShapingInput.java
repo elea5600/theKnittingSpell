@@ -20,14 +20,18 @@ public class ShapingInput {
     @NotNull(message = "Number of rows is required")
     @Positive(message = "Number of rows must be positive")
     private Integer numberOfRows;
+    
+
+    private Boolean symmetricalShaping; // true if shaping on both sides, false if on one side only
 
     public ShapingInput() {
     }
 
-    public ShapingInput(Integer currentStitches, Integer targetStitches, Integer numberOfRows) {
+    public ShapingInput(Integer currentStitches, Integer targetStitches, Integer numberOfRows, Boolean symmetricalShaping) {
         this.currentStitches = currentStitches;
         this.targetStitches = targetStitches;
         this.numberOfRows = numberOfRows;
+        this.symmetricalShaping = symmetricalShaping;
     }
 
     public Integer getCurrentStitches() {
@@ -52,5 +56,13 @@ public class ShapingInput {
 
     public void setNumberOfRows(Integer numberOfRows) {
         this.numberOfRows = numberOfRows;
+    }
+
+    public Boolean getSymmetricalShaping() {
+        return symmetricalShaping;
+    }
+
+    public void setSymmetricalShaping(Boolean symmetricalShaping) {
+        this.symmetricalShaping = symmetricalShaping;
     }
 }

@@ -9,8 +9,23 @@ import java.util.List;
 public class ShapingResult {
 
     public enum ShapingType {
-        INCREASE, DECREASE, NO_CHANGE
+        INCREASE, DECREASE, NO_CHANGE;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case INCREASE:
+                    return "Increase";
+                case DECREASE:
+                    return "Decrease";
+                case NO_CHANGE:
+                    return "No change";
+                default:
+                    throw new IllegalArgumentException();
+            }
+        }
     }
+    
 
     private ShapingType shapingType;
     private int totalChanges;
@@ -112,4 +127,5 @@ public class ShapingResult {
     public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
     }
+    
 }

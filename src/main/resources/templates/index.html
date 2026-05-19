@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>KnitHelper – Knitting Calculator</title>
+    <title>The Knitting Spell – Knitting Calculator and More</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 
 <header>
     <div class="header-inner">
-        <span class="logo">🧶 KnitHelper</span>
+        <span class="logo">The Knitting Spell</span>
         <p class="tagline">Calculate stitches, rows, increases &amp; decreases for your knitting projects</p>
     </div>
 </header>
@@ -108,7 +109,7 @@
         <h2>Shaping Calculator</h2>
         <p class="description">
             Enter your current stitch count, target stitch count, and the number of rows available
-            to work out how to distribute your increases or decreases evenly.
+            to work out how to distribute your increases or decreases evenly. You can also choose to activate symmetrical shaping, which will apply increases/decreases on both sides of your piece at the same time.
         </p>
 
         <form th:action="@{/calculate/shaping}" method="post" th:object="${shapingInput}" novalidate>
@@ -135,6 +136,10 @@
                     <span class="error" th:if="${#fields.hasErrors('numberOfRows')}"
                           th:errors="*{numberOfRows}"></span>
                 </div>
+                <div class="field-row checkbox-row">
+                    <label for="symmetricalShaping">Activate symmetrical shaping</label>
+                    <input type="checkbox" id="symmetricalShaping" th:field="*{symmetricalShaping}"/>
+                </div>
             </fieldset>
 
             <button type="submit" class="btn-primary">Calculate</button>
@@ -158,7 +163,7 @@
 </main>
 
 <footer>
-    <p>🧶 KnitHelper &mdash; Happy knitting!</p>
+    <p> Magical Knitting ✨</p>
 </footer>
 
 <script>

@@ -9,11 +9,11 @@
 }
 
 :root {
-    --color-primary:   #7c4f8e;
-    --color-secondary: #c98bbf;
-    --color-accent:    #f0d6e8;
-    --color-text:      #2d2d2d;
-    --color-muted:     #666;
+    --color-primary:   #253b8a; /* refined indigo */
+    --color-secondary: #4a79d6; /* softer highlight */
+    --color-accent:    rgba(74,121,214,0.12);
+    --color-text:      #1f2c3f; /* dark text for light backgrounds */
+    --color-muted:     #6b7f9f;
     --color-success:   #4a7c59;
     --color-error:     #c0392b;
     --color-increase:  #2e7d32;
@@ -23,7 +23,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     background: #faf5fb;
     color: var(--color-text);
     line-height: 1.6;
@@ -35,7 +35,7 @@ body {
 /* ── Header ─────────────────────────────────────────────── */
 
 header {
-    background: var(--color-primary);
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
     color: #fff;
     padding: 1.5rem 2rem;
 }
@@ -46,9 +46,10 @@ header {
 }
 
 .logo {
-    font-size: 1.8rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
     font-weight: 700;
-    letter-spacing: -.5px;
+    letter-spacing: -.6px;
 }
 
 .tagline {
@@ -159,8 +160,8 @@ legend {
 
 .field-row input:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(124,79,142,.15);
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(74,121,214,.15);
 }
 
 .error {
@@ -184,7 +185,7 @@ legend {
 }
 
 .btn-primary:hover {
-    background: #5e3a6e;
+    background: #184f9a;
 }
 
 /* ── Results ─────────────────────────────────────────────── */
@@ -271,4 +272,166 @@ footer {
     font-size: .85rem;
     color: var(--color-muted);
     border-top: 1px solid var(--color-accent);
+}
+
+/* ── Dark blue theme overrides + starry background ───────── */
+
+:root {
+    --color-primary:   #253b8a; /* refined indigo */
+    --color-secondary: #4a79d6; /* softer highlight */
+    --color-accent:    rgba(74,121,214,0.12);
+    --color-text:      #e9f2ff; /* near-white for dark theme */
+    --color-muted:     #b1c9f2; /* muted light blue */
+    --color-success:   #4a7c59;
+    --color-error:     #f28b82;
+    --color-increase:  #79b36a;
+    --color-decrease:  #e57373;
+}
+
+body {
+    background: linear-gradient(180deg,#021027 0%, #042544 100%);
+    color: var(--color-text);
+}
+
+/* Starry background using layered radial gradients (no external assets) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle, rgba(255,255,255,0.95) 1px, transparent 1px) 10px 20px / 120px 120px,
+        radial-gradient(circle, rgba(255,255,255,0.85) 1px, transparent 1px) 60px 80px / 200px 200px,
+        radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px) 0 0 / 320px 320px;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Ensure content sits above the star layer */
+header, main, footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* Panels and inputs tuned for dark background */
+.tab-panel {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.tab-btn {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.06);
+    color: var(--color-text);
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+fieldset {
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.01);
+}
+
+.field-row input {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--color-text);
+}
+
+.field-row input:focus {
+    box-shadow: 0 0 0 3px rgba(74,121,214,.12);
+}
+
+.btn-primary {
+    background: var(--color-secondary);
+}
+
+.btn-primary:hover {
+    background: #154d9a;
+}
+
+/* Tweak checkbox to match dark theme */
+.checkbox-row input[type="checkbox"] {
+    background: #051633;
+    border: 2px solid rgba(255,255,255,0.08);
+}
+
+.checkbox-row input[type="checkbox"]::after {
+    background: #dfefff;
+}
+
+.checkbox-row input[type="checkbox"]:checked {
+    background: linear-gradient(180deg, var(--color-secondary), #175bb2);
+    border-color: var(--color-secondary);
+}
+
+.result-card {
+    background: linear-gradient(180deg, rgba(30,99,196,0.06), rgba(11,61,145,0.04));
+}
+
+.result-table td {
+    color: var(--color-text);
+}
+
+
+/* ── Checkbox / Toggle styling ───────────────────────────── */
+
+.checkbox-row {
+    flex-direction: row;
+    align-items: center;
+    gap: .6rem;
+}
+
+.checkbox-row label {
+    margin-bottom: 0;
+    color: var(--color-muted);
+    font-weight: 500;
+    font-size: .85rem;
+}
+
+.checkbox-row input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    background: #fff;
+    border: 2px solid #d9d9d9;
+    border-radius: 22px;
+    position: relative;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease;
+    vertical-align: middle;
+}
+
+.checkbox-row input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    transition: transform .18s ease;
+}
+
+.checkbox-row input[type="checkbox"]:checked {
+    background: linear-gradient(180deg, var(--color-primary), #6b3e87);
+    border-color: var(--color-primary);
+}
+
+.checkbox-row input[type="checkbox"]:checked::after {
+    transform: translateX(18px);
+}
+
+.checkbox-row input[type="checkbox"]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(124,79,142,.12);
 }
