@@ -368,6 +368,17 @@ footer {
     border-top: 1px solid var(--color-accent);
 }
 
+.footer-links a {
+    color: #ffc1d9; /* light pink */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer-links a:hover {
+    color: #ff8fb3;
+    text-decoration: underline;
+}
+
 /* ── Dark blue theme overrides + starry background ───────── */
 
 :root {
