@@ -93,7 +93,8 @@ class KnitCalculatorServiceTest {
         ShapingInput input = new ShapingInput(80, 60, 40);
         ShapingResult result = service.calculateShaping(input);
 
-        assertEquals(4, result.getBaseInterval());
+        // My logic decreases every 2 rows 1 stitch!
+        assertEquals(2, result.getBaseInterval());
         assertEquals(0, result.getLongerIntervalCount());
     }
 
@@ -106,8 +107,10 @@ class KnitCalculatorServiceTest {
 
         assertEquals(10, result.getTotalChanges());
         // 5 shaping events over 22 rows
-        assertEquals(4, result.getBaseInterval());
-        assertEquals(2, result.getLongerIntervalCount());
+
+        // My logic is better, decreases 1 stitch every 3 rows, and every 8 rows decreases 1 stitch
+        assertEquals(3, result.getBaseInterval());
+        assertEquals(8, result.getLongerIntervalCount());
     }
 
     // ──────────────────────────────────────────────────────────

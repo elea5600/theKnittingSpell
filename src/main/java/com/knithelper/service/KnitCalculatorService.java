@@ -56,20 +56,21 @@ public class KnitCalculatorService {
         Boolean symmetrical = input.getSymmetricalShaping() != null ? input.getSymmetricalShaping() : Boolean.FALSE;
         int stitchDifference = Math.abs(target - current);
         List<String> instructions = new ArrayList<>();
+        List<String> warnings = new ArrayList<>();
 
         if (current == target) {    
             instructions.add("No shaping needed – stitch count is already " + current + ".");
-            return new ShapingResult(ShapingType.NO_CHANGE, 0, current, target, rows, 0, 0, instructions);
+            return new ShapingResult(ShapingType.NO_CHANGE, 0, current, target, rows, 0, 0, instructions, warnings);
         }
 
         if (symmetrical && (stitchDifference % 2 != 0)) {
-            instructions.add("Warning: Symmetrical shaping selected but stitch difference is odd. " +
-                    "One extra stitch will be shaped at the end of the process.");
+            warnings.add("Symmetrical shaping selected but stitch difference is odd. " +
+                "One extra stitch will be shaped at the end of the process.");
         }
 
         if (stitchDifference > rows) {
-            instructions.add("Warning: More shaping events needed than available rows. " +
-                    "You will need to shape more than 1 stitch at a time in some rows.");
+            warnings.add("More shaping events needed than available rows. " +
+                "You will need to shape more than 1 stitch at a time in some rows.");
         }
 
         // if we increase or decrease generally (just for clearer instructions)
@@ -113,7 +114,7 @@ public class KnitCalculatorService {
                             instructions.add("Additionally, " + type.toString().toLowerCase() + " 1 stitch every row.");
                         } else {
                             if (additionalInterval*2 > rows) { // if the additional shaping interval is larger than the number of rows, we just do the remaining shapings at the end of the process
-                                instructions.add("Additionally, " + type.toString().toLowerCase() + " 1 stitch in the last row " + rows + ".");
+                                instructions.add("Additionally, " + type.toString().toLowerCase() + " the remaining 1 stitch in the last row.");
                             } else {
                                 instructions.add("Additionally, " + type.toString().toLowerCase() + " 1 stitch every " + additionalInterval + " rows.");
                             }
@@ -146,26 +147,30 @@ public class KnitCalculatorService {
                     instructions.add(type.toString() + " " + shapingsPerShapingRow + " stitches on each side every " + baseInterval + " rows.");
                 }
                 remainingStitches = stitchDifference - (shapingsPerShapingRow * 2 * (rows / baseInterval)); // how many shapings we have left to do after shaping every baseInterval rows by shapingsPerShapingRow stitches on each side
-                if (remainingStitches > 0) {
+                System.out.println("remainingStitches for symmetrical shaping: " + remainingStitches);
+
+                if (remainingStitches == 1) {
+                    instructions.add("Additionally, " + type.toString().toLowerCase() + " the remaining 1 stitch on only one side in the last row.");
+                }
+
+                if (remainingStitches > 1) {
                     remainingShapingperRow = (double) remainingStitches / rows / 2;
                     additionalInterval = (int) Math.ceil(1.0 / remainingShapingperRow); // how often we need to do 1 additional shaping on each side to shape the remaining stitches within the available rows
+                    System.out.println("additionalInterval for symmetrical shaping: " + additionalInterval);
                     if (additionalInterval == 1) {
                         instructions.add("Additionally, " + type.toString().toLowerCase() + " 1 stitch on each side every row.");
                     } else {
                             if (additionalInterval*2 > rows) { // if the additional shaping interval is larger than the number of rows, we just do the remaining shapings at the end of the process
-                                instructions.add("Additionally, " + type.toString().toLowerCase() + " 1 stitch on each side in the last row " + rows + ".");
+                                instructions.add("Additionally, " + type.toString().toLowerCase() + " 1 stitch on each side in the last row.");
                             } else {
                                 instructions.add("Additionally, " + type.toString().toLowerCase() + " 1 stitch on each side every " + additionalInterval + " rows.");
                             }
                     }
                 }
-                if (stitchDifference % 2 != 0) {
-                    instructions.add("Finally, " + type.toString().toLowerCase() + " 1 stitch on one side in the last row to shape the remaining odd stitch.");
-                }
             }
         }
 
         return new ShapingResult(type, stitchDifference, current, target, rows,
-                baseInterval, additionalInterval, instructions);
+            baseInterval, additionalInterval, instructions, warnings);
     }
 }

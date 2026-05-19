@@ -48,12 +48,17 @@ public class ShapingResult {
      */
     private List<String> instructions;
 
+    /**
+     * Non-blocking warnings shown separately from the numbered steps.
+     */
+    private List<String> warnings;
+
     public ShapingResult() {
     }
 
     public ShapingResult(ShapingType shapingType, int totalChanges, int currentStitches,
                           int targetStitches, int numberOfRows, int baseInterval,
-                          int longerIntervalCount, List<String> instructions) {
+                          int longerIntervalCount, List<String> instructions, List<String> warnings) {
         this.shapingType = shapingType;
         this.totalChanges = totalChanges;
         this.currentStitches = currentStitches;
@@ -62,6 +67,7 @@ public class ShapingResult {
         this.baseInterval = baseInterval;
         this.longerIntervalCount = longerIntervalCount;
         this.instructions = instructions;
+        this.warnings = warnings;
     }
 
     public ShapingType getShapingType() {
@@ -126,6 +132,14 @@ public class ShapingResult {
 
     public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
+    }
+
+    public List<String> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<String> warnings) {
+        this.warnings = warnings;
     }
     
 }

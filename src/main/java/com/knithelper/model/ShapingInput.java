@@ -27,6 +27,12 @@ public class ShapingInput {
     public ShapingInput() {
     }
 
+    public ShapingInput(Integer currentStitches, Integer targetStitches, Integer numberOfRows) {
+        this.currentStitches = currentStitches;
+        this.targetStitches = targetStitches;
+        this.numberOfRows = numberOfRows;
+    }
+
     public ShapingInput(Integer currentStitches, Integer targetStitches, Integer numberOfRows, Boolean symmetricalShaping) {
         this.currentStitches = currentStitches;
         this.targetStitches = targetStitches;
