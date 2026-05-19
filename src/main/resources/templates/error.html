@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Error - The Knitting Spell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <span class="logo">The Knitting Spell</span>
+    </div>
+</header>
+<main>
+    <section class="error-page">
+        <h1>Something went wrong</h1>
+        <p th:if="${message}" th:text="${message}">An unexpected error occurred.</p>
+        <div class="error-details">
+            <p><strong>Status:</strong> <span th:text="${status}">-</span></p>
+            <p><strong>Error:</strong> <span th:text="${error}">-</span></p>
+            <p><strong>Path:</strong> <span th:text="${path}">-</span></p>
+            <p th:if="${timestamp}"><strong>Time:</strong> <span th:text="${timestamp}">-</span></p>
+        </div>
+        <p><a th:href="@{/}">Return to home</a></p>
+    </section>
+</main>
+<footer>
+    <p>Magical Knitting ✨ - by Elea</p>
+</footer>
+</body>
+</html>
