@@ -45,15 +45,15 @@
                 <legend>Gauge / Tension Swatch</legend>
                 <div class="field-row">
                     <label for="stitchesPer10Cm">Stitches per 10 cm</label>
-                    <input type="number" id="stitchesPer10Cm" th:field="*{stitchesPer10Cm}"
-                           step="0.1" min="0.1" placeholder="e.g. 22"/>
+                      <input type="text" id="stitchesPer10Cm" th:field="*{stitchesPer10Cm}"
+                          inputmode="decimal" maxlength="9" placeholder="e.g. 22"/>
                     <span class="error" th:if="${#fields.hasErrors('stitchesPer10Cm')}"
                           th:errors="*{stitchesPer10Cm}"></span>
                 </div>
                 <div class="field-row">
                     <label for="rowsPer10Cm">Rows per 10 cm</label>
-                    <input type="number" id="rowsPer10Cm" th:field="*{rowsPer10Cm}"
-                           step="0.1" min="0.1" placeholder="e.g. 28"/>
+                      <input type="text" id="rowsPer10Cm" th:field="*{rowsPer10Cm}"
+                          inputmode="decimal" maxlength="9" placeholder="e.g. 28"/>
                     <span class="error" th:if="${#fields.hasErrors('rowsPer10Cm')}"
                           th:errors="*{rowsPer10Cm}"></span>
                 </div>
@@ -63,15 +63,15 @@
                 <legend>Desired Dimensions</legend>
                 <div class="field-row">
                     <label for="desiredWidthCm">Width (cm)</label>
-                    <input type="number" id="desiredWidthCm" th:field="*{desiredWidthCm}"
-                           step="0.1" min="0.1" placeholder="e.g. 50"/>
+                      <input type="text" id="desiredWidthCm" th:field="*{desiredWidthCm}"
+                          inputmode="decimal" maxlength="9" placeholder="e.g. 50"/>
                     <span class="error" th:if="${#fields.hasErrors('desiredWidthCm')}"
                           th:errors="*{desiredWidthCm}"></span>
                 </div>
                 <div class="field-row">
                     <label for="desiredLengthCm">Length (cm)</label>
-                    <input type="number" id="desiredLengthCm" th:field="*{desiredLengthCm}"
-                           step="0.1" min="0.1" placeholder="e.g. 60"/>
+                      <input type="text" id="desiredLengthCm" th:field="*{desiredLengthCm}"
+                          inputmode="decimal" maxlength="9" placeholder="e.g. 60"/>
                     <span class="error" th:if="${#fields.hasErrors('desiredLengthCm')}"
                           th:errors="*{desiredLengthCm}"></span>
                 </div>

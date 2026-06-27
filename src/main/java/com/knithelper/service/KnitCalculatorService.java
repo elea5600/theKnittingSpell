@@ -7,6 +7,7 @@ import com.knithelper.model.StitchCalculationInput;
 import com.knithelper.model.StitchCalculationResult;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,18 +25,23 @@ public class KnitCalculatorService {
      * @return the required stitch and row counts (rounded to nearest whole number)
      */
     public StitchCalculationResult calculateStitchesAndRows(StitchCalculationInput input) {
-        int stitchCount = (int) Math.round(
-                input.getStitchesPer10Cm() * input.getDesiredWidthCm() / 10.0);
-        int rowCount = (int) Math.round(
-                input.getRowsPer10Cm() * input.getDesiredLengthCm() / 10.0);
+        BigDecimal stitchCountValue = input.getStitchesPer10Cm()
+            .multiply(input.getDesiredWidthCm())
+            .divide(BigDecimal.TEN);
+        BigDecimal rowCountValue = input.getRowsPer10Cm()
+            .multiply(input.getDesiredLengthCm())
+            .divide(BigDecimal.TEN);
+
+        int stitchCount = stitchCountValue.setScale(0, java.math.RoundingMode.HALF_UP).intValueExact();
+        int rowCount = rowCountValue.setScale(0, java.math.RoundingMode.HALF_UP).intValueExact();
 
         return new StitchCalculationResult(
                 stitchCount,
                 rowCount,
-                input.getDesiredWidthCm(),
-                input.getDesiredLengthCm(),
-                input.getStitchesPer10Cm(),
-                input.getRowsPer10Cm()
+            input.getDesiredWidthCm().doubleValue(),
+            input.getDesiredLengthCm().doubleValue(),
+            input.getStitchesPer10Cm().doubleValue(),
+            input.getRowsPer10Cm().doubleValue()
         );
     }
 

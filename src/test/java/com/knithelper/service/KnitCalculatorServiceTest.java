@@ -8,6 +8,8 @@ import com.knithelper.model.StitchCalculationResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class KnitCalculatorServiceTest {
@@ -27,7 +29,9 @@ class KnitCalculatorServiceTest {
     void calculateStitchesAndRows_basicGauge() {
         // 22 stitches per 10 cm, 50 cm wide → 22 * 50 / 10 = 110 stitches
         // 28 rows per 10 cm, 60 cm long  → 28 * 60 / 10 = 168 rows
-        StitchCalculationInput input = new StitchCalculationInput(22.0, 28.0, 50.0, 60.0);
+        StitchCalculationInput input = new StitchCalculationInput(
+            BigDecimal.valueOf(22.0), BigDecimal.valueOf(28.0),
+            BigDecimal.valueOf(50.0), BigDecimal.valueOf(60.0));
         StitchCalculationResult result = service.calculateStitchesAndRows(input);
 
         assertEquals(110, result.getStitchCount());
@@ -38,7 +42,9 @@ class KnitCalculatorServiceTest {
     void calculateStitchesAndRows_roundsToNearestInteger() {
         // 22 stitches per 10 cm, 15 cm wide → 22 * 15 / 10 = 33.0 exact
         // 22 rows per 10 cm, 13 cm → 22 * 13 / 10 = 28.6 → rounds to 29
-        StitchCalculationInput input = new StitchCalculationInput(22.0, 22.0, 15.0, 13.0);
+        StitchCalculationInput input = new StitchCalculationInput(
+            BigDecimal.valueOf(22.0), BigDecimal.valueOf(22.0),
+            BigDecimal.valueOf(15.0), BigDecimal.valueOf(13.0));
         StitchCalculationResult result = service.calculateStitchesAndRows(input);
 
         assertEquals(33, result.getStitchCount());
@@ -47,7 +53,9 @@ class KnitCalculatorServiceTest {
 
     @Test
     void calculateStitchesAndRows_preservesDimensions() {
-        StitchCalculationInput input = new StitchCalculationInput(20.0, 30.0, 45.0, 70.0);
+        StitchCalculationInput input = new StitchCalculationInput(
+            BigDecimal.valueOf(20.0), BigDecimal.valueOf(30.0),
+            BigDecimal.valueOf(45.0), BigDecimal.valueOf(70.0));
         StitchCalculationResult result = service.calculateStitchesAndRows(input);
 
         assertEquals(45.0, result.getDesiredWidthCm(), 0.001);
