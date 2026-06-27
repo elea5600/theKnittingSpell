@@ -1,5 +1,8 @@
-# knitHelper
-An application that helps to calculate stitches and rows for a knitting project! Especially helpful for calculating decreases and increases.
+# knitHelper 💕🧶
+
+
+An application that helps to calculate stitches and rows for a knitting project!
+Especially helpful for calculating decreases and increases.
 
 ## Run with Docker
 
@@ -14,3 +17,5 @@ Run the container:
 ```bash
 docker run --rm -p 8080:8080 knithelper
 ```
+
+SooN: will be hosted on a cloud ✨⛅
