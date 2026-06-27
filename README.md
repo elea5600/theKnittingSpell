@@ -32,4 +32,4 @@ docker run --rm -p 8080:8080 knithelper
 <img width="780" height="1240" alt="image" src="https://github.com/user-attachments/assets/c23e02ff-56c2-45dd-9a95-6de4894810a0" />
 
 ## The Shaping Calculator
-<img width="1013" height="1228" alt="image" src="https://github.com/user-attachments/assets/0aa81444-a168-4648-be7c-b6e6d2920125" />
+<img width="780" height="1251" alt="image" src="https://github.com/user-attachments/assets/c815641a-512f-4e62-bf23-05a3ee7832b5" />
