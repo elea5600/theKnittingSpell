@@ -29,7 +29,7 @@ docker run --rm -p 8080:8080 knithelper
 ```
 
 ## Stitch and Row Count Calculator
-<img width="862" height="960" alt="image" src="https://github.com/user-attachments/assets/7d2f8560-772a-4951-b108-9ead4417ece3" />
+<img width="780" height="1240" alt="image" src="https://github.com/user-attachments/assets/c23e02ff-56c2-45dd-9a95-6de4894810a0" />
 
 ## The Shaping Calculator
 <img width="1013" height="1228" alt="image" src="https://github.com/user-attachments/assets/0aa81444-a168-4648-be7c-b6e6d2920125" />
