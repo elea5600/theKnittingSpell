@@ -1,0 +1,14 @@
+services:
+  knit:
+    build: .
+    container_name: knit
+    ports:
+      - "2001:8080"
+    restart: unless-stopped
+    networks:
+      - cloudify
+
+networks:
+  cloudify:
+    external: true
+    driver: bridge
